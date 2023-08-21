@@ -1,0 +1,78 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background-color: #494949;
+}
+p {
+  color: #fff;
+  font-family: Magra;
+  font-size: 51px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+label {
+  color: #fff;
+  font-family: Magra;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+h1 {
+  color: #fff;
+  font-family: Magra;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+::placeholder {
+  color: #000;
+  font-family: Magra;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.title input {
+  border-radius: 11px;
+  background: #a7a5a5;
+  width: 302px;
+  height: 44px;
+}
+#name {
+  border-radius: 11px;
+  background: #a7a5a5;
+  width: 302px;
+  height: 44px;
+}
+#quantity {
+  border-radius: 11px;
+  background: #a7a5a5;
+  width: 186px;
+  height: 44px;
+}
+textarea {
+  width: 631px;
+  height: 106px;
+  border-radius: 11px;
+  background: #a7a5a5;
+  color: #000;
+  font-family: Magra;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.ingredients {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}

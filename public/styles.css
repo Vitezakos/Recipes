@@ -1,0 +1,42 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #494949;
+}
+
+header {
+  background-image: url(./breakfast.png);
+  width: auto;
+  background-size: cover;
+  height: 30%;
+  background-position: center;
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 4rem;
+  margin-right: 4rem;
+  margin-bottom: 4rem;
+  margin-top: -6rem;
+}
+
+.left {
+  display: flex;
+  gap: 4rem;
+}
+
+.right {
+  display: flex;
+  gap: 4rem;
+}
+
+body-element {
+  width: min-content;
+  display: inline-flex;
+  flex-wrap: wrap;
+  margin-right: 1rem;
+}

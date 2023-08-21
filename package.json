@@ -1,0 +1,43 @@
+{
+  "name": "recipes",
+  "version": "1.0.0",
+  "description": "Create and store recipes",
+  "main": "index.js",
+  "type": "commonjs",
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildwebpack": "webpack",
+    "loadOnBrowser": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vitezakos/Recipes.git"
+  },
+  "author": "Vitezakos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vitezakos/Recipes/issues"
+  },
+  "homepage": "https://github.com/Vitezakos/Recipes#readme",
+  "devDependencies": {
+    "@babel/register": "7.22.5",
+    "@types/node": "20.4.4",
+    "@typescript-eslint/eslint-plugin": "6.2.0",
+    "@typescript-eslint/parser": "6.2.0",
+    "eslint": "8.45.0",
+    "file-loader": "6.2.0",
+    "ts-loader": "9.4.4",
+    "typescript": "5.1.6",
+    "webpack": "5.88.2",
+    "webpack-cli": "5.1.4",
+    "webpack-dev-server": "4.15.1"
+  },
+  "dependencies": {
+    "lit-element": "3.3.2"
+  }
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="recipeStyles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Magra&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="top">
+        <p>Create new recipe</p>
+        <button>X</button>
+      </div>
+      <div class="title">
+        <label>Title</label>
+        <input type="text" placeholder="Recipe..." />
+        <label>Label</label>
+      </div>
+      <h1>Ingredients</h1>
+      <div class="ingredients">
+        <input type="text" id="name" placeholder="Name..." />
+        <input type="text" id="quantity" placeholder="Quantity..." />
+        <button id="delete-btn">X</button>
+        <button>+</button>
+      </div>
+      <div class="steps">
+        <h1>Steps</h1>
+        <textarea id="description">Describe the first step...</textarea>
+        <button>X</button>
+        <button>+</button>
+      </div>
+      <div class="buttons">
+        <button>Upload Photo</button>
+        <button>Submit</button>
+        <button>Cancel</button>
+      </div>
+    </div>
+    <div id="recipe"></div>
+    <script src="output.js"></script>
+  </body>
+</html>
