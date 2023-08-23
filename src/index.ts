@@ -1,6 +1,7 @@
 import { MyElement } from "./components/myelement";
 import { CardElement } from "./components/cardelement";
 import { DropDown } from "./components/mydropdown";
+import { MyList } from "./components/listingelement";
 let elem = new MyElement();
 elem.name = "Breakfast";
 let elem2 = new MyElement();
@@ -27,7 +28,7 @@ dropdown.list = ["1", "2", "3", "4"];
 dropdown2.list = ["9", "8", "7", "6"];
 document.querySelector(".title")?.append(dropdown);
 document
-  .querySelector(".ingredients")
+  .querySelector("my-listing")
   ?.insertBefore(dropdown2, document.getElementById("delete-btn"));
 
 const desc = document.getElementById("description");
@@ -35,3 +36,13 @@ desc?.addEventListener("click", deletePlaceholder);
 function deletePlaceholder() {
   desc!.innerHTML = "";
 }
+
+// addEventListener("click", addPlaceholder);
+// function addPlaceholder() {
+//   if (desc!.innerHTML != "") {
+//     desc!.innerHTML = "Describe the first step...";
+//   }
+// }
+
+let list = new MyList();
+list;

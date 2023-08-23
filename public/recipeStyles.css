@@ -28,6 +28,12 @@ h1 {
   font-weight: 400;
   line-height: normal;
 }
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+}
 ::placeholder {
   color: #000;
   font-family: Magra;
@@ -36,22 +42,15 @@ h1 {
   font-weight: 400;
   line-height: normal;
 }
+.title {
+  display: flex;
+  align-items: flex-end;
+  gap: 3rem;
+}
 .title input {
   border-radius: 11px;
   background: #a7a5a5;
   width: 302px;
-  height: 44px;
-}
-#name {
-  border-radius: 11px;
-  background: #a7a5a5;
-  width: 302px;
-  height: 44px;
-}
-#quantity {
-  border-radius: 11px;
-  background: #a7a5a5;
-  width: 186px;
   height: 44px;
 }
 textarea {
@@ -70,9 +69,5 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-}
-.ingredients {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
+  gap: 3rem;
 }

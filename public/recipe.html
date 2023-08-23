@@ -16,7 +16,7 @@
     <div class="container">
       <div class="top">
         <p>Create new recipe</p>
-        <button>X</button>
+        <button id="closepage"><a href="index.html">X</a></button>
       </div>
       <div class="title">
         <label>Title</label>
@@ -24,12 +24,13 @@
         <label>Label</label>
       </div>
       <h1>Ingredients</h1>
-      <div class="ingredients">
+      <my-listing></my-listing>
+      <!-- <div class="ingredients">
         <input type="text" id="name" placeholder="Name..." />
         <input type="text" id="quantity" placeholder="Quantity..." />
         <button id="delete-btn">X</button>
-        <button>+</button>
-      </div>
+        <button class="ingredient-add">+</button>
+      </div> -->
       <div class="steps">
         <h1>Steps</h1>
         <textarea id="description">Describe the first step...</textarea>
