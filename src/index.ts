@@ -2,6 +2,7 @@ import { MyElement } from "./components/myelement";
 import { CardElement } from "./components/cardelement";
 import { DropDown } from "./components/mydropdown";
 import { MyList } from "./components/listingelement";
+import { MySteps } from "./components/mystep";
 let elem = new MyElement();
 elem.name = "Breakfast";
 let elem2 = new MyElement();
@@ -23,26 +24,21 @@ let card2 = new CardElement();
 document.querySelector("#front")?.append(card, card2);
 
 let dropdown = new DropDown();
-let dropdown2 = new DropDown();
-dropdown.list = ["1", "2", "3", "4"];
-dropdown2.list = ["9", "8", "7", "6"];
+dropdown.list = ["Breakfast", "Lunch", "Dinner"];
 document.querySelector(".title")?.append(dropdown);
-document
-  .querySelector("my-listing")
-  ?.insertBefore(dropdown2, document.getElementById("delete-btn"));
-
-const desc = document.getElementById("description");
-desc?.addEventListener("click", deletePlaceholder);
-function deletePlaceholder() {
-  desc!.innerHTML = "";
-}
-
-// addEventListener("click", addPlaceholder);
-// function addPlaceholder() {
-//   if (desc!.innerHTML != "") {
-//     desc!.innerHTML = "Describe the first step...";
-//   }
-// }
 
 let list = new MyList();
 list;
+
+let step = new MySteps();
+step;
+
+const uploadBtn = document.getElementById("upload-btn");
+const fileBtn = document.getElementById("file-input");
+uploadBtn?.addEventListener("click", function () {
+  fileBtn?.click();
+});
+fileBtn?.addEventListener("change", function () {
+  document.getElementById("uploadSpan")!.innerHTML =
+    "You have uploaded your image.";
+});

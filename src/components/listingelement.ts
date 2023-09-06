@@ -6,6 +6,8 @@ import {
   css,
   queryAll,
 } from "lit-element";
+import close from "../images/close.png";
+import add from "../images/add.png";
 @customElement("my-listing")
 export class MyList extends LitElement {
   static styles = css`
@@ -37,27 +39,61 @@ export class MyList extends LitElement {
     .hidden {
       display: none;
     }
+    .ingredient-add {
+      position: absolute;
+      bottom: 15px;
+      right: -50px;
+    }
+    .ingredients #delete-btn {
+      background: none;
+      border: none;
+    }
+    .ingredients #delete-btn img {
+      width: 32px;
+      height: 32px;
+    }
+    .ingredient-add {
+      background: none;
+      border: none;
+    }
+    .ingredient-add img {
+      width: 32px;
+      height: 32px;
+    }
   `;
 
   @property()
   name = "Somebody";
   @queryAll("#delete-btn")
   _button!: NodeListOf<HTMLButtonElement>;
-
+  @queryAll("#list-btn")
+  _lbtn!: NodeListOf<HTMLButtonElement>;
   render() {
     return html`<div class="ingredients">
         <input type="text" id="name" placeholder="Name..." />
         <input type="text" id="quantity" placeholder="Quantity..." />
+        <button @click=${this.showList}>unit</button>
+        <ul class="hidden" id="measurements">
+          <li>L</li>
+          <li>g</li>
+        </ul>
       </div>
-      <button class="ingredient-add" @click=${this.addNewListing}>+</button>`;
+      <button class="ingredient-add" @click=${this.addNewListing}>
+        <img src=${add} />
+      </button>`;
   }
   removeListing() {
-    this.parentElement?.remove();
+    this.parentElement?.parentElement?.remove();
   }
   newLine = `<div class="ingredients">
     <input type="text" id="name" placeholder="Name..." />
     <input type="text" id="quantity" placeholder="Quantity..." />
-    <button id="delete-btn">X</button>
+    <button id=list-btn>unit</button>
+        <ul class="hidden" id="measurements">
+          <li>L</li>
+          <li>g</li>
+        </ul>
+    <button id="delete-btn"><img src=${close}></button>
   </div>`;
   addNewListing() {
     let div = document.createElement("div");
@@ -67,6 +103,16 @@ export class MyList extends LitElement {
       "click",
       this.removeListing
     );
+    this._lbtn[this._lbtn.length - 1].addEventListener("click", this.showList2);
+  }
+  showList() {
+    const ul = this.shadowRoot?.querySelector("#measurements");
+    ul?.classList.toggle("hidden");
+  }
+  showList2() {
+    this.parentElement
+      ?.querySelector("#measurements")
+      ?.classList.toggle("hidden");
   }
 }
 declare global {

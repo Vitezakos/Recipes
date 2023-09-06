@@ -16,7 +16,9 @@
     <div class="container">
       <div class="top">
         <p>Create new recipe</p>
-        <button id="closepage"><a href="index.html">X</a></button>
+        <button id="closepage">
+          <a href="index.html"><img src="close.png" /></a>
+        </button>
       </div>
       <div class="title">
         <label>Title</label>
@@ -25,22 +27,16 @@
       </div>
       <h1>Ingredients</h1>
       <my-listing></my-listing>
-      <!-- <div class="ingredients">
-        <input type="text" id="name" placeholder="Name..." />
-        <input type="text" id="quantity" placeholder="Quantity..." />
-        <button id="delete-btn">X</button>
-        <button class="ingredient-add">+</button>
-      </div> -->
-      <div class="steps">
-        <h1>Steps</h1>
-        <textarea id="description">Describe the first step...</textarea>
-        <button>X</button>
-        <button>+</button>
-      </div>
+      <h1>Steps</h1>
+      <my-steps></my-steps>
       <div class="buttons">
-        <button>Upload Photo</button>
-        <button>Submit</button>
-        <button>Cancel</button>
+        <button id="upload-btn">Upload Photo</button>
+        <input type="file" id="file-input" accept="image/*" />
+        <span id="uploadSpan"></span>
+        <div class="finish-btn">
+          <button id="submit-btn">Submit</button>
+          <button id="cancel-btn"><a href="index.html">Cancel</a></button>
+        </div>
       </div>
     </div>
     <div id="recipe"></div>

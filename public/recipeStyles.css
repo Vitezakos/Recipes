@@ -53,21 +53,53 @@ h1 {
   width: 302px;
   height: 44px;
 }
-textarea {
-  width: 631px;
-  height: 106px;
-  border-radius: 11px;
-  background: #a7a5a5;
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 3rem;
+}
+my-listing {
+  position: relative;
+}
+my-steps {
+  position: relative;
+}
+button {
   color: #000;
   font-family: Magra;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  border-radius: 11px;
+  border: 1px solid #000;
+  background: #a7a5a5;
+  height: 44px;
 }
-.top {
+.container .top #closepage {
+  background: none;
+  border: none;
+}
+.container .top #closepage img {
+  width: 32px;
+  height: 32px;
+}
+#upload-btn {
+  margin-bottom: 26.8px;
+  width: 150px;
+}
+#file-input {
+  display: none;
+}
+#submit-btn {
+  width: 140px;
+}
+#cancel-btn {
+  width: 83px;
+}
+.finish-btn {
   display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  gap: 3rem;
+  justify-content: center;
+  gap: 5rem;
 }
