@@ -21,7 +21,6 @@ export class DropDown extends LitElement {
       display: block;
     }
   `;
-
   @property()
   list: any = [];
   @queryAll("li")
@@ -39,6 +38,10 @@ export class DropDown extends LitElement {
           </ul>`
       : null}`;
   }
+  get buttonValue() {
+    return this._button.innerText;
+  }
+
   showList() {
     this._li.forEach((elem) => elem.classList.toggle("show"));
   }
@@ -48,7 +51,6 @@ export class DropDown extends LitElement {
     this._button.innerText = target.innerText;
   }
 }
-
 declare global {
   interface HTMLElementTagNameMap {
     "drop-down": DropDown;

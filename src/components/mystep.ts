@@ -36,7 +36,7 @@ export class MySteps extends LitElement {
       font-weight: 400;
       line-height: normal;
     }
-    #steps-add {
+    .steps-add {
       position: absolute;
       right: -40px;
       bottom: 73px;
@@ -44,47 +44,50 @@ export class MySteps extends LitElement {
     #first-remove {
       visibility: hidden;
     }
-    #steps-remove {
+    .steps-remove {
     }
-    .steps #steps-remove {
+    .steps .steps-remove {
       background: none;
       border: none;
     }
-    .steps #steps-remove img {
+    .steps .steps-remove img {
       width: 32px;
       height: 32px;
     }
-    #steps-add {
+    .steps-add {
       background: none;
       border: none;
     }
-    #steps-add img {
+    .steps-add img {
       width: 32px;
       height: 32px;
     }
   `;
   @property()
   template = `<div class="steps">
-    <textarea id="description" placeholder='Describe this step...'>
+    <textarea class="description" placeholder='Describe this step...'>
 </textarea
     >
-    <button id="steps-remove"><img src=${close}></i></button>
+    <button class="steps-remove"><img src=${close}></i></button>
   </div>`;
-  @queryAll("#steps-remove")
+  @queryAll(".steps-remove")
   _remove_button!: NodeListOf<HTMLButtonElement>;
-  @queryAll("#description")
+  @queryAll(".description")
   _textarea!: NodeListOf<HTMLTextAreaElement>;
   render() {
     return html`<div class="steps">
         <textarea
-          id="description"
+          class="description"
           placeholder="Describe this step..."
         ></textarea>
         <button id="first-remove">X</button>
       </div>
-      <button id="steps-add" @click=${this.createStep}>
+      <button class="steps-add" @click=${this.createStep}>
         <img src=${add} />
       </button>`;
+  }
+  get description() {
+    return Array.from(this._textarea).map((element) => element.value);
   }
   removeStep() {
     this.parentElement?.parentElement?.remove();
