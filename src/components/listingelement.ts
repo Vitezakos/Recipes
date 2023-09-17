@@ -5,13 +5,13 @@ import {
   property,
   css,
   queryAll,
-  PropertyValueMap,
 } from "lit-element";
 import close from "../images/close.png";
 import add from "../images/add.png";
 interface ingredientsBlueprint {
   ingredientsName: String[];
   ingredientsQuantity: String[];
+  ingredientsUnit: String[];
 }
 @customElement("my-listing")
 export class MyList extends LitElement {
@@ -81,6 +81,17 @@ export class MyList extends LitElement {
   _li!: NodeListOf<HTMLButtonElement>;
   @queryAll("ul")
   _ul!: NodeListOf<HTMLElement>;
+  @property()
+  template = `<div class="ingredients">
+  <input type="text" class="name" placeholder="Name..." />
+  <input type="text" class="quantity" placeholder="Quantity..." />
+  <button class=list-btn>unit</button>
+      <ul class="hidden" class="measurements">
+        <li>g</li>
+        <li>L</li>
+      </ul>
+  <button class="delete-btn"><img src=${close}></button>
+</div>`;
   render() {
     return html`<div class="ingredients">
         <input type="text" class="name" placeholder="Name..." />
@@ -97,48 +108,41 @@ export class MyList extends LitElement {
       </button>`;
   }
   handleList(e: MouseEvent) {
-    this._ul[this._ul.length - 1].classList.toggle("hidden");
     const target = e.currentTarget as HTMLElement;
+    target.parentElement?.classList.toggle("hidden");
     this._lbtn[0].innerText = target.innerText;
+  }
+  handleList2(e: MouseEvent) {
+    const target = e.currentTarget as HTMLLIElement;
+    target.parentElement!.classList.toggle("hidden");
+    const btn = target!.parentElement!.previousElementSibling!;
+    btn.innerHTML = target.innerHTML;
   }
   get ingredients() {
     let ingredientsName = [];
     let ingredientsQuantity = [];
+    let ingredientsUnit = [];
     for (let i = 0; i < this._inputName.length; i++) {
       ingredientsName[i] = this._inputName[i].value;
       ingredientsQuantity[i] = this._inputQuantity[i].value;
+      ingredientsUnit[i] = this._lbtn[i].innerHTML;
     }
     let ingredientsAll = {} as ingredientsBlueprint;
     ingredientsAll["ingredientsName"] = ingredientsName;
     ingredientsAll["ingredientsQuantity"] = ingredientsQuantity;
+    ingredientsAll["ingredientsUnit"] = ingredientsUnit;
     return ingredientsAll;
   }
   removeListing() {
     this.parentElement?.parentElement?.remove();
   }
-  newTemplate = "";
-  protected updated(
-    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
-  ): void {
-    if (_changedProperties.has("measure") && this.measure.length > 0) {
-      this.newTemplate = `<div class="ingredients">
-    <input type="text" class="name" placeholder="Name..." />
-    <input type="text" class="quantity" placeholder="Quantity..." />
-    <button class=list-btn>unit</button>
-        <ul class="hidden" class="measurements">
-        ${this.measure.map(
-          (i: number) => `<li @click=${this.handleList}>${i}</li>`
-        )}
-        </ul>
-    <button class="delete-btn"><img src=${close}></button>
-  </div>`;
-    }
-  }
-
   addNewListing() {
     let div = document.createElement("div");
-    div.innerHTML = this.newTemplate;
+    div.innerHTML = this.template;
     this.shadowRoot?.append(div);
+    div.querySelectorAll("li").forEach((target) => {
+      target.addEventListener("click", this.handleList2);
+    });
     this._button[this._button.length - 1].addEventListener(
       "click",
       this.removeListing
@@ -152,10 +156,6 @@ export class MyList extends LitElement {
   }
   showList2(e: any) {
     e.currentTarget.nextElementSibling.classList.toggle("hidden");
-
-    // this.parentElement
-    //   ?.querySelector(".measurements")
-    //   ?.classList.toggle("hidden");
   }
 }
 declare global {
