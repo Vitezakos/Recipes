@@ -19,10 +19,34 @@ left?.append(elem, elem2);
 const right = document.querySelector(".right") as HTMLBodyElement;
 right?.append(elem3, elem4);
 
-let card = new CardElement();
-let card2 = new CardElement();
-document.querySelector("#front")?.append(card, card2);
+function renderCards() {
+  if (!localStorage.getItem("recipes")) {
+    return;
+  } else {
+    let cardMain = JSON.parse(localStorage.getItem("recipes")!);
+    cardMain.forEach((e: any) => {
+      let newCard = new CardElement();
+      newCard.setAttribute("title", e.title);
+      newCard.setAttribute("label", e.label);
+      newCard.setAttribute(
+        "ingredientsname",
+        JSON.stringify(e.ingredients.ingredientsName)
+      );
+      newCard.setAttribute(
+        "ingredientsquantity",
+        JSON.stringify(e.ingredients.ingredientsQuantity)
+      );
+      newCard.setAttribute(
+        "ingredientsunit",
+        JSON.stringify(e.ingredients.ingredientsUnit)
+      );
+      newCard.setAttribute("description", JSON.stringify(e.steps));
+      document.querySelector("#front")?.append(newCard);
+    });
+  }
+}
 
+renderCards();
 let dropdown = new DropDown();
 
 dropdown.setAttribute("id", "dropdownList");
@@ -47,20 +71,21 @@ fileBtn?.addEventListener("change", function () {
 
 const submitBtn = document.getElementById("submit-btn");
 submitBtn?.addEventListener("click", saveData);
-window.addEventListener("collectData", () => {
-  console.log("hi");
-});
 function saveData() {
-  clearData();
+  let newRecipe = {} as any;
   let title = (<HTMLInputElement>document.getElementById("titleInput"))?.value;
-  localStorage.setItem("title", title);
+  newRecipe.title = title;
   let label = dropdown.buttonValue;
-  localStorage.setItem("label", label);
+  newRecipe.label = label;
   let ingredients = list.ingredients;
-  localStorage.setItem("ingredients", JSON.stringify(ingredients));
+  newRecipe.ingredients = ingredients;
   let steps = step.description;
-  localStorage.setItem("description", JSON.stringify(steps));
-}
-function clearData() {
-  localStorage.clear();
+  newRecipe.steps = steps;
+  if (!localStorage.getItem("recipes")) {
+    localStorage.setItem("recipes", "[]");
+  }
+  let recipes = JSON.parse(localStorage.getItem("recipes")!);
+  recipes.push(newRecipe);
+  localStorage.setItem("recipes", JSON.stringify(recipes));
+  window.location.href = "index.html";
 }

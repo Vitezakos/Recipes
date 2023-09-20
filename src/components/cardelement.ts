@@ -1,7 +1,15 @@
-import { LitElement, html, customElement, property, css } from "lit-element";
+import {
+  LitElement,
+  html,
+  customElement,
+  property,
+  css,
+  query,
+  PropertyValueMap,
+} from "lit-element";
 import Soup from "../images/onion-soup.png";
 import Arrow from "../images/arrow-down.png";
-@customElement("body-element")
+@customElement("card-element")
 export class CardElement extends LitElement {
   static styles = css`
     .container {
@@ -46,6 +54,13 @@ export class CardElement extends LitElement {
       width: 10px;
       height: 10px;
     }
+    .container .main .bottom h2 {
+      color: #fff;
+      font-family: K2D;
+      font-style: normal;
+      line-height: normal;
+      margin: 0px;
+    }
     .container .main .bottom .desc {
       color: #fff;
       font-family: K2D;
@@ -61,30 +76,91 @@ export class CardElement extends LitElement {
 
   @property()
   image = Soup;
-
+  @property()
+  title = "";
+  @property()
+  ingredientsName = "";
+  @property()
+  ingredientsQuantity = "";
+  @property()
+  ingredientsUnit = "";
+  @property()
+  description = "";
+  @query(".desc")
+  _desc!: HTMLDivElement;
+  @query(".details-li")
+  _ul!: HTMLUListElement;
   render() {
     return html`<div class="container">
       <div class="main">
         <img src=${this.image} />
         <div class="bottom">
-          <div class="desc">
-            <p>
-              This is just some random text as placeholder so I have something
-              here
-            </p>
-          </div>
+          <h2>${this.title}</h2>
+          <div class="desc"></div>
           <button @click=${this.showContent}>Steps <img src=${Arrow} /></button>
         </div>
       </div>
       <div class="details">
-        <ul>
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
-          <li>4</li>
-        </ul>
+        <ul class="details-li"></ul>
       </div>
     </div>`;
+  }
+  attributeChangedCallback(
+    name: string,
+    _old: string | null,
+    value: string | null
+  ): void {
+    if (name == "title") {
+      this.title = value as string;
+    }
+    if (name == "ingredientsname") {
+      this.ingredientsName = value as string;
+    }
+    if (name == "ingredientsquantity") {
+      this.ingredientsQuantity = value as string;
+    }
+    if (name == "ingredientsunit") {
+      this.ingredientsUnit = value as string;
+    }
+    if (name == "description") {
+      this.description = value as string;
+    }
+  }
+  protected updated(
+    _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
+  ): void {
+    if (_changedProperties.has("ingredientsName")) {
+      const names = JSON.parse(this.ingredientsName);
+      names.forEach((e: string, i: number) => {
+        let div = document.createElement("div");
+        div.innerHTML = `<span>${e}</span>`;
+        div.className = `ingredient-${i}`;
+        this._desc?.appendChild(div);
+      });
+    }
+    if (_changedProperties.has("ingredientsQuantity")) {
+      const names = JSON.parse(this.ingredientsQuantity);
+      names.forEach((e: string, i: number) => {
+        let span = document.createElement("span");
+        span.innerHTML = e;
+        span.className = `span-${i}`;
+        this._desc.querySelector(`.ingredient-${i}`)?.appendChild(span);
+      });
+    }
+    if (_changedProperties.has("ingredientsUnit")) {
+      const names = JSON.parse(this.ingredientsUnit);
+      names.forEach((e: string, i: number) => {
+        this._desc.querySelector(`.span-${i}`)?.append(e);
+      });
+    }
+    if (_changedProperties.has("description")) {
+      const names = JSON.parse(this.description);
+      names.forEach((e: string) => {
+        let li = document.createElement("li");
+        li.innerHTML = e;
+        this._ul.appendChild(li);
+      });
+    }
   }
   showContent() {
     const details = this.shadowRoot?.querySelector(".details");

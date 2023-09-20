@@ -34,7 +34,7 @@ header {
   gap: 4rem;
 }
 
-body-element {
+card-element {
   width: min-content;
   display: inline-flex;
   flex-wrap: wrap;
