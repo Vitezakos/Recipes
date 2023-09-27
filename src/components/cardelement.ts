@@ -9,6 +9,8 @@ import {
 } from "lit-element";
 import Soup from "../images/onion-soup.png";
 import Arrow from "../images/arrow-down.png";
+import Add from "../images/add.png";
+import LeftArrow from "../images/arrow-left.png";
 @customElement("card-element")
 export class CardElement extends LitElement {
   static styles = css`
@@ -21,6 +23,7 @@ export class CardElement extends LitElement {
       display: none;
       border-left: white solid 1px;
       padding: 1rem;
+      position: relative;
     }
     .container .main {
       display: flex;
@@ -72,6 +75,30 @@ export class CardElement extends LitElement {
     .container .details.show {
       display: flex;
     }
+    .container .main .bottom .steps.hidden {
+      display: none;
+    }
+    .container .main .bottom .add {
+      display: none;
+    }
+    .container .main .bottom .add.show {
+      display: block;
+    }
+    .container .details .close img {
+      width: 27px;
+      height: 27px;
+      margin-left: -8px;
+      margin-top: -3px;
+    }
+    .container .details .close {
+      width: 27px;
+      height: 27px;
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      background: none;
+      border: none;
+    }
   `;
 
   @property()
@@ -90,18 +117,32 @@ export class CardElement extends LitElement {
   _desc!: HTMLDivElement;
   @query(".details-li")
   _ul!: HTMLUListElement;
+  @query(".steps")
+  _stepBtn!: HTMLButtonElement;
+  @query(".add")
+  _addBtn!: HTMLButtonElement;
+  @query(".name")
+  _name!: HTMLHeadingElement;
   render() {
     return html`<div class="container">
       <div class="main">
         <img src=${this.image} />
         <div class="bottom">
-          <h2>${this.title}</h2>
+          <h2 class="name">${this.title}</h2>
           <div class="desc"></div>
-          <button @click=${this.showContent}>Steps <img src=${Arrow} /></button>
+          <button class="steps" @click=${this.toggleContent}>
+            Steps <img src=${Arrow} />
+          </button>
+          <button class="add" @click=${this.storeContent}>
+            Add <img src=${Add} />
+          </button>
         </div>
       </div>
       <div class="details">
         <ul class="details-li"></ul>
+        <button class="close" @click=${this.toggleContent}>
+          <img src=${LeftArrow} />
+        </button>
       </div>
     </div>`;
   }
@@ -133,7 +174,7 @@ export class CardElement extends LitElement {
       const names = JSON.parse(this.ingredientsName);
       names.forEach((e: string, i: number) => {
         let div = document.createElement("div");
-        div.innerHTML = `<span>${e}</span>`;
+        div.innerHTML = `<span>${e}</span><span> </span>`;
         div.className = `ingredient-${i}`;
         this._desc?.appendChild(div);
       });
@@ -162,9 +203,31 @@ export class CardElement extends LitElement {
       });
     }
   }
-  showContent() {
+  toggleContent() {
     const details = this.shadowRoot?.querySelector(".details");
     details?.classList.toggle("show");
+    this._stepBtn.classList.toggle("hidden");
+    this._addBtn.classList.toggle("show");
+  }
+  storeContent() {
+    let shoppingList = {} as any;
+    shoppingList.name = this._name.innerText;
+    let ingredient = [];
+    let length = this._desc.childElementCount;
+    for (let i = 0; i < length; i++) {
+      ingredient[i] = this.shadowRoot!.querySelector(
+        `.ingredient-${i}`
+      )?.textContent;
+    }
+    shoppingList.element = ingredient;
+    if (!localStorage.getItem("listing")) {
+      localStorage.setItem("listing", "[]");
+    }
+    if (!localStorage.getItem("listing")?.includes(shoppingList.name)) {
+      let shopping = JSON.parse(localStorage.getItem("listing")!);
+      shopping.push(shoppingList);
+      localStorage.setItem("listing", JSON.stringify(shopping));
+    }
   }
 }
 declare global {
