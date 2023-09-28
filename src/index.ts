@@ -89,3 +89,31 @@ function saveData() {
   localStorage.setItem("recipes", JSON.stringify(recipes));
   window.location.href = "index.html";
 }
+
+function shoppingElement() {
+  const itemName = document.querySelector(".items");
+  let listingName = JSON.parse(localStorage.getItem("listing")!);
+  const itemList = document.querySelector(".itemList");
+  if (localStorage.getItem("listing")) {
+    console.log(listingName);
+    for (let i = 0; i < listingName.length; i++) {
+      const li = document.createElement("li");
+      li.innerText = listingName[i].name;
+      itemName?.appendChild(li);
+      for (let j = 0; j < listingName[i].element.length; j++) {
+        const li2 = document.createElement("li");
+        li2.innerText = listingName[i].element[j];
+        itemList?.appendChild(li2);
+      }
+    }
+  } else {
+    itemName!.innerHTML = "";
+    itemList!.innerHTML = "";
+  }
+}
+document.querySelector(".myList")?.addEventListener("click", shoppingElement);
+
+document.querySelector(".clean")?.addEventListener("click", () => {
+  localStorage.removeItem("listing");
+  shoppingElement();
+});

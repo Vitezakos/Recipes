@@ -14,3 +14,18 @@ header {
   height: 30%;
   background-position: center;
 }
+
+button {
+  width: 135px;
+  height: 38px;
+}
+
+.closeShopping {
+  width: 20px;
+  height: 20px;
+}
+
+img {
+  width: 15px;
+  height: 15px;
+}
