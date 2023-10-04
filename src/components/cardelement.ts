@@ -21,9 +21,10 @@ export class CardElement extends LitElement {
     }
     .container .details {
       display: none;
-      border-left: white solid 1px;
+      border-left: #959292 solid 1px;
       padding: 1rem;
       position: relative;
+      width: max-content;
     }
     .container .main {
       display: flex;
@@ -71,6 +72,7 @@ export class CardElement extends LitElement {
       font-style: normal;
       font-weight: 400;
       line-height: normal;
+      width: 250px;
     }
     .container .details.show {
       display: flex;
@@ -98,6 +100,14 @@ export class CardElement extends LitElement {
       bottom: 10px;
       background: none;
       border: none;
+    }
+    .container .details-li {
+      color: #fff;
+      font-family: K2D;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
     }
   `;
 
@@ -176,6 +186,9 @@ export class CardElement extends LitElement {
         let div = document.createElement("div");
         div.innerHTML = `<span>${e}</span><span> </span>`;
         div.className = `ingredient-${i}`;
+        div.style.display = "flex";
+        div.style.flexDirection = "row";
+        div.style.justifyContent = "space-between";
         this._desc?.appendChild(div);
       });
     }

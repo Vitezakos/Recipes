@@ -13,12 +13,38 @@ export class DropDown extends LitElement {
   static styles = css`
     li {
       display: none;
-      background-color: red;
+      background: #a7a5a5;
       margin: 4px;
-      width: 50px;
+      width: 90px;
+      border-radius: 4px;
+      color: #000;
+      font-family: Magra;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      justify-content: center;
+    }
+    ul {
+      padding: 0px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .show {
-      display: block;
+      display: flex;
+    }
+    button {
+      width: 135px;
+      height: 44px;
+      border-radius: 11px;
+      background: #a7a5a5;
+      color: #000;
+      font-family: Magra;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
     }
   `;
   @property()

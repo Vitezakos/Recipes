@@ -18,7 +18,7 @@ export class MyList extends LitElement {
   static styles = css`
     .ingredients {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       gap: 2rem;
     }
     ::placeholder {
@@ -46,7 +46,7 @@ export class MyList extends LitElement {
     }
     .ingredient-add {
       position: absolute;
-      bottom: 15px;
+      bottom: 8px;
       right: -50px;
     }
     .ingredients .delete-btn {
@@ -64,6 +64,33 @@ export class MyList extends LitElement {
     .ingredient-add img {
       width: 32px;
       height: 32px;
+    }
+    .ingredients .list-btn {
+      border-radius: 11px;
+      background: #a7a5a5;
+      width: 80px;
+      height: 44px;
+      color: #000;
+      font-family: Magra;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+    ul {
+      color: #000;
+      font-family: Magra;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      background: #a7a5a5;
+      margin: 0px;
+      border-radius: 11px;
+      padding: 0px;
+      padding-left: 30px;
+      padding-right: 10px;
+      border-radius: 6px;
     }
   `;
 

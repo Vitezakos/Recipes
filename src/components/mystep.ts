@@ -15,6 +15,7 @@ export class MySteps extends LitElement {
       display: flex;
       align-items: center;
       margin-bottom: 26.8px;
+      position: relative;
     }
     textarea {
       width: 631px;
@@ -39,12 +40,14 @@ export class MySteps extends LitElement {
     .steps-add {
       position: absolute;
       right: -40px;
-      bottom: 73px;
+      bottom: 39px;
     }
     #first-remove {
       visibility: hidden;
     }
     .steps-remove {
+      right: 30px;
+      position: absolute;
     }
     .steps .steps-remove {
       background: none;

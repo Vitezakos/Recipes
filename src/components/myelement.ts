@@ -25,6 +25,24 @@ export class MyElement extends LitElement {
       width: 10px;
       height: 10px;
     }
+    a:link {
+      text-decoration: none;
+    }
+
+    a:visited {
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
+
+    a:active {
+      text-decoration: none;
+    }
+    a {
+      color: #000000;
+    }
   `;
 
   // Declare reactive properties
