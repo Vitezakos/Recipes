@@ -91,6 +91,22 @@ export class MyList extends LitElement {
       padding-left: 30px;
       padding-right: 10px;
       border-radius: 6px;
+      list-style: none;
+    }
+    input {
+      font-family: Magra;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+    li {
+      position: relative;
+      left: -10px;
+      cursor: pointer;
+    }
+    button:hover {
+      cursor: pointer;
     }
   `;
 

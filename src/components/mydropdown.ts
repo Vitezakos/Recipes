@@ -24,6 +24,7 @@ export class DropDown extends LitElement {
       font-weight: 400;
       line-height: normal;
       justify-content: center;
+      cursor: pointer;
     }
     ul {
       padding: 0px;
@@ -45,6 +46,7 @@ export class DropDown extends LitElement {
       font-style: normal;
       font-weight: 400;
       line-height: normal;
+      cursor: pointer;
     }
   `;
   @property()

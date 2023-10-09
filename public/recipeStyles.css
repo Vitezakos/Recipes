@@ -52,6 +52,11 @@ h1 {
   background: #a7a5a5;
   width: 302px;
   height: 44px;
+  font-family: Magra;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 .top {
   display: flex;
@@ -76,6 +81,7 @@ button {
   border: 1px solid #000;
   background: #a7a5a5;
   height: 44px;
+  cursor: pointer;
 }
 .container .top #closepage {
   background: none;
@@ -86,7 +92,6 @@ button {
   height: 32px;
 }
 #upload-btn {
-  margin-bottom: 26.8px;
   width: 150px;
 }
 #file-input {

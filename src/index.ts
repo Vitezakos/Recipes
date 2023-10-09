@@ -50,7 +50,7 @@ renderCards();
 let dropdown = new DropDown();
 
 dropdown.setAttribute("id", "dropdownList");
-dropdown.list = ["Breakfast", "Lunch", "Dinner"];
+dropdown.list = ["Breakfast", "Lunch"];
 document.querySelector(".title")?.append(dropdown);
 
 let list = new MyList();
@@ -94,7 +94,7 @@ function shoppingElement() {
   const itemName = document.querySelector(".items");
   let listingName = JSON.parse(localStorage.getItem("listing")!);
   const itemList = document.querySelector(".itemList") as HTMLUListElement;
-  if (itemName!.innerHTML == "" && itemList!.innerHTML == "") {
+  if (itemName?.innerHTML == "" && itemList?.innerHTML == "") {
     if (localStorage.getItem("listing")) {
       for (let i = 0; i < listingName.length; i++) {
         const li = document.createElement("li");
@@ -111,14 +111,14 @@ function shoppingElement() {
       itemList!.innerHTML = "";
     }
   } else if (
-    (itemName!.innerHTML !== "" || itemList!.innerHTML !== "") &&
+    (itemName?.innerHTML !== "" || itemList?.innerHTML !== "") &&
     !localStorage.getItem("listing")
   ) {
     itemName!.innerHTML = "";
     itemList!.innerHTML = "";
   }
   let text = [] as any;
-  itemList!.childNodes.forEach((e) => {
+  itemList?.childNodes.forEach((e) => {
     let elements = e.textContent?.split(" ");
     text.push(elements);
   });
@@ -164,7 +164,7 @@ function shoppingElement() {
     }
   }
 }
-document.querySelector(".myList")?.addEventListener("click", shoppingElement);
+shoppingElement();
 
 document.querySelector(".clean")?.addEventListener("click", () => {
   localStorage.removeItem("listing");

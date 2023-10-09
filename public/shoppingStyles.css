@@ -52,6 +52,7 @@ header {
   width: 135px;
   height: 38px;
   background-color: #000;
+  cursor: pointer;
 }
 
 img {
