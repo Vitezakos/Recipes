@@ -112,18 +112,25 @@ export class MyList extends LitElement {
 
   @property()
   measure: any = [];
+
   @queryAll(".delete-btn")
   _button!: NodeListOf<HTMLButtonElement>;
+
   @queryAll(".list-btn")
   _lbtn!: NodeListOf<HTMLButtonElement>;
+
   @queryAll(".name")
   _inputName!: NodeListOf<HTMLInputElement>;
+
   @queryAll(".quantity")
   _inputQuantity!: NodeListOf<HTMLInputElement>;
+
   @queryAll("li")
   _li!: NodeListOf<HTMLButtonElement>;
+
   @queryAll("ul")
   _ul!: NodeListOf<HTMLElement>;
+
   @property()
   template = `<div class="ingredients">
   <input type="text" class="name" placeholder="Name..." />
@@ -135,6 +142,7 @@ export class MyList extends LitElement {
       </ul>
   <button class="delete-btn"><img src=${close}></button>
 </div>`;
+
   render() {
     return html`<div class="ingredients">
         <input type="text" class="name" placeholder="Name..." />

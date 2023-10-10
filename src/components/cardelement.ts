@@ -140,32 +140,49 @@ export class CardElement extends LitElement {
 
   @property()
   image = Soup;
+
   @property()
   title = "";
+
   @property()
   ingredientsName = "";
+
   @property()
   ingredientsQuantity = "";
+
   @property()
   ingredientsUnit = "";
+
   @property()
   description = "";
+
   @property()
   isAdded: boolean = false;
+
   @query(".desc")
   _desc!: HTMLDivElement;
+
   @query(".details-li")
   _ul!: HTMLUListElement;
+
   @query(".steps")
   _stepBtn!: HTMLButtonElement;
+
   @query(".add")
   _addBtn!: HTMLButtonElement;
+
   @query(".name")
   _name!: HTMLHeadingElement;
+
   @query(".remove")
   _removeBtn!: HTMLButtonElement;
+
   @query(".container")
   _container!: HTMLDivElement;
+
+  @query(".details")
+  _details!: HTMLDivElement;
+
   render() {
     return html`<div class="container">
       <div class="main">
@@ -203,15 +220,19 @@ export class CardElement extends LitElement {
     if (name == "title") {
       this.title = value as string;
     }
+
     if (name == "ingredientsname") {
       this.ingredientsName = value as string;
     }
+
     if (name == "ingredientsquantity") {
       this.ingredientsQuantity = value as string;
     }
+
     if (name == "ingredientsunit") {
       this.ingredientsUnit = value as string;
     }
+
     if (name == "description") {
       this.description = value as string;
     }
@@ -221,9 +242,9 @@ export class CardElement extends LitElement {
   ): void {
     if (_changedProperties.has("ingredientsName")) {
       const names = JSON.parse(this.ingredientsName);
-      names.forEach((e: string, i: number) => {
+      names.forEach((name: string, i: number) => {
         let div = document.createElement("div");
-        div.innerHTML = `<span>${e}</span><span> </span>`;
+        div.innerHTML = `<span>${name}</span><span> </span>`;
         div.className = `ingredient-${i}`;
         div.style.display = "flex";
         div.style.flexDirection = "row";
@@ -233,24 +254,24 @@ export class CardElement extends LitElement {
     }
     if (_changedProperties.has("ingredientsQuantity")) {
       const names = JSON.parse(this.ingredientsQuantity);
-      names.forEach((e: string, i: number) => {
+      names.forEach((name: string, i: number) => {
         let span = document.createElement("span");
-        span.innerHTML = e;
+        span.innerHTML = name;
         span.className = `span-${i}`;
         this._desc.querySelector(`.ingredient-${i}`)?.appendChild(span);
       });
     }
     if (_changedProperties.has("ingredientsUnit")) {
       const names = JSON.parse(this.ingredientsUnit);
-      names.forEach((e: string, i: number) => {
-        this._desc.querySelector(`.span-${i}`)?.append(e);
+      names.forEach((name: string, i: number) => {
+        this._desc.querySelector(`.span-${i}`)?.append(name);
       });
     }
     if (_changedProperties.has("description")) {
       const names = JSON.parse(this.description);
-      names.forEach((e: string) => {
+      names.forEach((name: string) => {
         let li = document.createElement("li");
-        li.innerHTML = e;
+        li.innerHTML = name;
         this._ul.appendChild(li);
       });
     }
@@ -288,8 +309,7 @@ export class CardElement extends LitElement {
     }
   }
   closeContent() {
-    const details = this.shadowRoot?.querySelector(".details");
-    details?.classList.toggle("show");
+    this._details.classList.toggle("show");
     this._stepBtn.classList.toggle("hidden");
     this._addBtn.classList.remove("show");
     this._removeBtn.classList.remove("show");

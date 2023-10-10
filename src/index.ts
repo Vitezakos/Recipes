@@ -1,23 +1,37 @@
-import { MyElement } from "./components/myelement";
+import { MyButton } from "./components/mybutton";
 import { CardElement } from "./components/cardelement";
 import { DropDown } from "./components/mydropdown";
 import { MyList } from "./components/listingelement";
 import { MySteps } from "./components/mystep";
-let elem = new MyElement();
-elem.name = "Breakfast";
-let elem2 = new MyElement();
-elem2.name = "Lunch";
-let elem3 = new MyElement();
-elem3.name = "Create Recipe";
-elem3.showIcon = true;
-elem3.link = "recipe";
-let elem4 = new MyElement();
-elem4.name = "Shopping List";
-elem4.link = "shopping";
+import { frontPage } from "./components/handlepages";
+
+frontPage();
+const headerBtns = [
+  { name: "Breakfast", placement: "left" },
+  { name: "Lunch", placement: "left" },
+  { name: "Create Recipe", showIcon: true, link: "recipe", placement: "right" },
+  { name: "Shopping List", link: "shopping", placement: "right" },
+];
 const left = document.querySelector(".left") as HTMLBodyElement;
-left?.append(elem, elem2);
 const right = document.querySelector(".right") as HTMLBodyElement;
-right?.append(elem3, elem4);
+headerBtns.forEach((btn) => {
+  let newBtn = new MyButton();
+  newBtn.name = btn.name;
+  if (btn.showIcon) {
+    newBtn.showIcon = btn.showIcon;
+  }
+
+  if (btn.link) {
+    newBtn.link = btn.link as "recipe" | "shopping";
+  }
+
+  if (btn.placement == "left") {
+    left?.append(newBtn);
+  }
+  if (btn.placement == "right") {
+    right?.append(newBtn);
+  }
+});
 
 function renderCards() {
   if (!localStorage.getItem("recipes")) {
@@ -48,7 +62,6 @@ function renderCards() {
 
 renderCards();
 let dropdown = new DropDown();
-
 dropdown.setAttribute("id", "dropdownList");
 dropdown.list = ["Breakfast", "Lunch"];
 document.querySelector(".title")?.append(dropdown);
@@ -56,6 +69,7 @@ document.querySelector(".title")?.append(dropdown);
 let list = new MyList();
 list.measure = ["g", "L"];
 document.querySelector(".ingredients")?.append(list);
+
 let step = new MySteps();
 document.querySelector(".steps")?.append(step);
 
@@ -73,14 +87,19 @@ const submitBtn = document.getElementById("submit-btn");
 submitBtn?.addEventListener("click", saveData);
 function saveData() {
   let newRecipe = {} as any;
+
   let title = (<HTMLInputElement>document.getElementById("titleInput"))?.value;
   newRecipe.title = title;
+
   let label = dropdown.buttonValue;
   newRecipe.label = label;
+
   let ingredients = list.ingredients;
   newRecipe.ingredients = ingredients;
+
   let steps = step.description;
   newRecipe.steps = steps;
+
   if (!localStorage.getItem("recipes")) {
     localStorage.setItem("recipes", "[]");
   }
@@ -92,17 +111,17 @@ function saveData() {
 
 function shoppingElement() {
   const itemName = document.querySelector(".items");
-  let listingName = JSON.parse(localStorage.getItem("listing")!);
+  let listedRecipes = JSON.parse(localStorage.getItem("listing")!);
   const itemList = document.querySelector(".itemList") as HTMLUListElement;
   if (itemName?.innerHTML == "" && itemList?.innerHTML == "") {
     if (localStorage.getItem("listing")) {
-      for (let i = 0; i < listingName.length; i++) {
+      for (let i = 0; i < listedRecipes.length; i++) {
         const li = document.createElement("li");
-        li.innerText = listingName[i].name;
+        li.innerText = listedRecipes[i].name;
         itemName?.appendChild(li);
-        for (let j = 0; j < listingName[i].element.length; j++) {
+        for (let j = 0; j < listedRecipes[i].element.length; j++) {
           const li2 = document.createElement("li");
-          li2.innerText = listingName[i].element[j];
+          li2.innerText = listedRecipes[i].element[j];
           itemList?.appendChild(li2);
         }
       }

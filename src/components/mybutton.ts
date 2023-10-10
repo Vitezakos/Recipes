@@ -1,8 +1,7 @@
 import { LitElement, html, customElement, property, css } from "lit-element";
 import add from "../images/add.png";
 @customElement("my-button")
-export class MyElement extends LitElement {
-  // Define scoped styles right with your component, in plain CSS
+export class MyButton extends LitElement {
   static styles = css`
     button {
       width: 183px;
@@ -45,21 +44,15 @@ export class MyElement extends LitElement {
     }
   `;
 
-  // Declare reactive properties
   @property()
   name?: string = "Yes";
+
   @property()
   showIcon: boolean = false;
+
   @property()
-  link: "" | "recipe" | "shopping" = ""; // Look into interfaces
-  attributeChangedCallback(
-    name: string,
-    _old: string | null,
-    value: string | null
-  ): void {
-    console.log(name, _old, value);
-  }
-  // Render the UI as a function of component state
+  link: "" | "recipe" | "shopping" = "";
+
   render() {
     return html`<button>
       ${this.link
@@ -70,10 +63,14 @@ export class MyElement extends LitElement {
         : html`${this.name} ${this.showIcon ? html`<img src=${add}></i>` : null}`}
     </button>`;
   }
+  set name2(newName: string) {
+    this.name = newName;
+    this.requestUpdate("name", newName);
+  }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "my-button": MyElement;
+    "my-button": MyButton;
   }
 }

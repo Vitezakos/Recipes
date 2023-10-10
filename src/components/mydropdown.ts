@@ -27,7 +27,7 @@ export class DropDown extends LitElement {
       cursor: pointer;
     }
     ul {
-      padding: 0px;
+      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -50,9 +50,11 @@ export class DropDown extends LitElement {
     }
   `;
   @property()
-  list: any = [];
+  list: string[] = [];
+
   @queryAll("li")
   _li!: NodeListOf<HTMLButtonElement>;
+
   @query("button")
   _button!: HTMLButtonElement;
 
@@ -61,7 +63,7 @@ export class DropDown extends LitElement {
       ? html`<button @click=${this.showList}>${this.list[0]}</button>
           <ul>
             ${this.list.map(
-              (i: number) => html`<li @click=${this.handleList}>${i}</li>`
+              (i) => html`<li @click=${this.handleList}>${i}</li>`
             )}
           </ul>`
       : null}`;

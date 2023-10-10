@@ -73,10 +73,13 @@ export class MySteps extends LitElement {
     >
     <button class="steps-remove"><img src=${close}></i></button>
   </div>`;
+
   @queryAll(".steps-remove")
   _remove_button!: NodeListOf<HTMLButtonElement>;
+
   @queryAll(".description")
   _textarea!: NodeListOf<HTMLTextAreaElement>;
+
   render() {
     return html`<div class="steps">
         <textarea
