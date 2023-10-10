@@ -8,11 +8,7 @@ import {
 } from "lit-element";
 import close from "../images/close.png";
 import add from "../images/add.png";
-interface ingredientsBlueprint {
-  ingredientsName: String[];
-  ingredientsQuantity: String[];
-  ingredientsUnit: String[];
-}
+import { ingredientsBlueprint } from "./handlepages";
 @customElement("my-listing")
 export class MyList extends LitElement {
   static styles = css`
@@ -32,14 +28,14 @@ export class MyList extends LitElement {
     .name {
       border-radius: 11px;
       background: #a7a5a5;
-      width: 302px;
-      height: 44px;
+      width: 42%;
+      height: 3rem;
     }
     .quantity {
       border-radius: 11px;
       background: #a7a5a5;
-      width: 186px;
-      height: 44px;
+      width: 23%;
+      height: 3rem;
     }
     .hidden {
       display: none;

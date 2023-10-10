@@ -37,8 +37,8 @@ export class CardElement extends LitElement {
       position: relative;
     }
     .container .main img {
-      width: 303px;
-      height: 196px;
+      width: 100%;
+      height: 10em;
     }
     .container .main .bottom {
       display: flex;
@@ -237,43 +237,55 @@ export class CardElement extends LitElement {
       this.description = value as string;
     }
   }
+  updateIngredientsName() {
+    const names = JSON.parse(this.ingredientsName);
+    names.forEach((name: string, i: number) => {
+      let div = document.createElement("div");
+      div.innerHTML = `<span>${name}</span><span> </span>`;
+      div.className = `ingredient-${i}`;
+      div.style.display = "flex";
+      div.style.flexDirection = "row";
+      div.style.justifyContent = "space-between";
+      this._desc?.appendChild(div);
+    });
+  }
+  updatedIngredientsQuantity() {
+    const names = JSON.parse(this.ingredientsQuantity);
+    names.forEach((name: string, i: number) => {
+      let span = document.createElement("span");
+      span.innerHTML = name;
+      span.className = `span-${i}`;
+      this._desc.querySelector(`.ingredient-${i}`)?.appendChild(span);
+    });
+  }
+  updatedIngredientsUnit() {
+    const names = JSON.parse(this.ingredientsUnit);
+    names.forEach((name: string, i: number) => {
+      this._desc.querySelector(`.span-${i}`)?.append(name);
+    });
+  }
+  updatedDescription() {
+    const names = JSON.parse(this.description);
+    names.forEach((name: string) => {
+      let li = document.createElement("li");
+      li.innerHTML = name;
+      this._ul.appendChild(li);
+    });
+  }
   protected updated(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
     if (_changedProperties.has("ingredientsName")) {
-      const names = JSON.parse(this.ingredientsName);
-      names.forEach((name: string, i: number) => {
-        let div = document.createElement("div");
-        div.innerHTML = `<span>${name}</span><span> </span>`;
-        div.className = `ingredient-${i}`;
-        div.style.display = "flex";
-        div.style.flexDirection = "row";
-        div.style.justifyContent = "space-between";
-        this._desc?.appendChild(div);
-      });
+      this.updateIngredientsName();
     }
     if (_changedProperties.has("ingredientsQuantity")) {
-      const names = JSON.parse(this.ingredientsQuantity);
-      names.forEach((name: string, i: number) => {
-        let span = document.createElement("span");
-        span.innerHTML = name;
-        span.className = `span-${i}`;
-        this._desc.querySelector(`.ingredient-${i}`)?.appendChild(span);
-      });
+      this.updatedIngredientsQuantity();
     }
     if (_changedProperties.has("ingredientsUnit")) {
-      const names = JSON.parse(this.ingredientsUnit);
-      names.forEach((name: string, i: number) => {
-        this._desc.querySelector(`.span-${i}`)?.append(name);
-      });
+      this.updatedIngredientsUnit();
     }
     if (_changedProperties.has("description")) {
-      const names = JSON.parse(this.description);
-      names.forEach((name: string) => {
-        let li = document.createElement("li");
-        li.innerHTML = name;
-        this._ul.appendChild(li);
-      });
+      this.updatedDescription();
     }
   }
   deleteCard() {
@@ -293,13 +305,15 @@ export class CardElement extends LitElement {
     details?.classList.toggle("show");
     this._stepBtn.classList.toggle("hidden");
     let array = JSON.parse(localStorage.getItem("listing")!);
-    let name = this._removeBtn.parentElement?.children[0].textContent;
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].name == name) {
-        this.isAdded = true;
-        break;
-      } else {
-        this.isAdded = false;
+    if (array !== null) {
+      let name = this._removeBtn.parentElement?.children[0].textContent;
+      for (let i = 0; i < array.length; i++) {
+        if (array[i].name == name) {
+          this.isAdded = true;
+          break;
+        } else {
+          this.isAdded = false;
+        }
       }
     }
     if (this.isAdded) {
@@ -315,16 +329,19 @@ export class CardElement extends LitElement {
     this._removeBtn.classList.remove("show");
   }
   storeContent() {
-    let shoppingList = {} as any;
+    interface shoppingListBlueprint {
+      name: string;
+      ingredients: string[];
+    }
+    let shoppingList = {} as shoppingListBlueprint;
     shoppingList.name = this._name.innerText;
-    let ingredient = [];
+    let ingredient = [] as string[];
     let length = this._desc.childElementCount;
     for (let i = 0; i < length; i++) {
-      ingredient[i] = this.shadowRoot!.querySelector(
-        `.ingredient-${i}`
-      )?.textContent;
+      ingredient[i] = this.shadowRoot!.querySelector(`.ingredient-${i}`)
+        ?.textContent as string;
     }
-    shoppingList.element = ingredient;
+    shoppingList.ingredients = ingredient;
     if (!localStorage.getItem("listing")) {
       localStorage.setItem("listing", "[]");
     }
