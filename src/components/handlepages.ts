@@ -135,73 +135,55 @@ export function shoppingListPage() {
     const itemName = document.querySelector(".items");
     let listedRecipes = JSON.parse(localStorage.getItem("listing")!);
     const itemList = document.querySelector(".itemList") as HTMLUListElement;
-    if (itemName?.innerHTML == "" && itemList?.innerHTML == "") {
-      if (localStorage.getItem("listing")) {
-        for (let i = 0; i < listedRecipes.length; i++) {
-          const li = document.createElement("li");
-          li.innerText = listedRecipes[i].name;
-          itemName?.appendChild(li);
-          for (let j = 0; j < listedRecipes[i].ingredients.length; j++) {
-            const li2 = document.createElement("li");
-            li2.innerText = listedRecipes[i].ingredients[j];
-            itemList?.appendChild(li2);
-          }
-        }
-      } else {
-        itemName!.innerHTML = "";
-        itemList!.innerHTML = "";
-      }
-    } else if (
-      (itemName?.innerHTML !== "" || itemList?.innerHTML !== "") &&
-      !localStorage.getItem("listing")
-    ) {
-      itemName!.innerHTML = "";
-      itemList!.innerHTML = "";
-    }
     let text = [] as any;
-    itemList?.childNodes.forEach((e) => {
-      let elements = e.textContent?.split(" ");
-      text.push(elements);
-    });
-    for (let i = 0; i < text.length; i++) {
-      let check = 0;
-      let newValue = "";
-
-      for (let j = 0; j < text.length; j++) {
-        if (text[i][0] == text[j][0]) {
-          check = check + 1;
-          if (check > 1) {
-            if (
-              text[i][1].slice(text[i][1].length - 1) ==
-              text[j][1].slice(text[j][1].length - 1)
-            ) {
-              let firstValue = text[i][1].slice(0, text[i][1].length - 1);
-              let secondValue = text[j][1].slice(0, text[i][1].length - 1);
-              let firstNumber = +firstValue;
-              let secondNumber = +secondValue;
-              let newNumber = firstNumber + secondNumber;
-              let newNumberAsString = newNumber.toString();
-              newValue =
-                newNumberAsString + text[i][1].slice(text[i][1].length - 1);
-              text[i][1] = newValue;
-            } else {
-              newValue =
-                text[i][1].slice(0, text[i][1].length) +
-                " " +
-                "+" +
-                " " +
-                text[j][1].slice(0, text[j][1].length);
-              text[i][1] = newValue;
-            }
-            let liToChange = itemList.children[i];
-            if (liToChange) {
-              liToChange.textContent = text[i][0] + " " + newValue;
-            }
-            if (itemList.children[j]) {
-              itemList.children[j].remove();
-            }
+    let k = 0;
+    if (localStorage.getItem("listing")) {
+      for (let i = 0; i < listedRecipes.length; i++) {
+        for (let j = 0; j < listedRecipes[i].ingredients.length; j++) {
+          text[k] = listedRecipes[i].ingredients[j].split(" ");
+          k++;
+        }
+      }
+      let finalIngredients = {} as string[];
+      for (let i = 0; i < text.length; i++) {
+        let currentIngredient = text[i].slice(0, -1).join(" ").toLowerCase();
+        let currentQuantityAndUnit = text[i][text[i].length - 1];
+        let currentQuantity = currentQuantityAndUnit.slice(0, -1);
+        if (!finalIngredients[currentIngredient]) {
+          finalIngredients[currentIngredient] = currentQuantityAndUnit;
+        } else {
+          let storedQuantityAndUnit = finalIngredients[currentIngredient];
+          let storedQuantity = finalIngredients[currentIngredient].slice(0, -1);
+          let storedUnit =
+            finalIngredients[currentIngredient][
+              finalIngredients[currentIngredient].length - 1
+            ];
+          let currentUnit =
+            currentQuantityAndUnit[currentQuantityAndUnit.length - 1] + "";
+          if (currentUnit.toLowerCase() == storedUnit.toLowerCase()) {
+            let addedQuantity =
+              Number(storedQuantity) + Number(currentQuantity);
+            finalIngredients[currentIngredient] = addedQuantity + storedUnit;
+          } else {
+            finalIngredients[currentIngredient] =
+              storedQuantityAndUnit + " " + "+" + " " + currentQuantityAndUnit;
           }
         }
+      }
+      for (let i = 0; i < listedRecipes.length; i++) {
+        const li = document.createElement("li");
+        li.innerText = listedRecipes[i].name;
+        itemName?.appendChild(li);
+      }
+      for (let i = 0; i < Object.keys(finalIngredients).length; i++) {
+        const li = document.createElement("li");
+        li.innerText = (Object.keys(finalIngredients)
+          [i].charAt(0)
+          .toUpperCase() +
+          Object.keys(finalIngredients)[i].slice(1) +
+          " " +
+          Object.values(finalIngredients)[i]) as string;
+        itemList?.appendChild(li);
       }
     }
   }
@@ -209,6 +191,9 @@ export function shoppingListPage() {
 
   document.querySelector(".clean")?.addEventListener("click", () => {
     localStorage.removeItem("listing");
-    shoppingElement();
+    const itemName = document.querySelector(".items");
+    const itemList = document.querySelector(".itemList");
+    itemName!.innerHTML = "";
+    itemList!.innerHTML = "";
   });
 }
