@@ -137,6 +137,8 @@ export function shoppingListPage() {
     const itemList = document.querySelector(".itemList") as HTMLUListElement;
     let text = [] as any;
     let k = 0;
+    let finalIngredients = {} as string[];
+
     if (localStorage.getItem("listing")) {
       for (let i = 0; i < listedRecipes.length; i++) {
         for (let j = 0; j < listedRecipes[i].ingredients.length; j++) {
@@ -144,11 +146,12 @@ export function shoppingListPage() {
           k++;
         }
       }
-      let finalIngredients = {} as string[];
+
       for (let i = 0; i < text.length; i++) {
-        let currentIngredient = text[i].slice(0, -1).join(" ").toLowerCase();
+        let currentIngredient = text[i].slice(0, -1)[0].toLowerCase();
         let currentQuantityAndUnit = text[i][text[i].length - 1];
         let currentQuantity = currentQuantityAndUnit.slice(0, -1);
+
         if (!finalIngredients[currentIngredient]) {
           finalIngredients[currentIngredient] = currentQuantityAndUnit;
         } else {
@@ -160,6 +163,7 @@ export function shoppingListPage() {
             ];
           let currentUnit =
             currentQuantityAndUnit[currentQuantityAndUnit.length - 1] + "";
+
           if (currentUnit.toLowerCase() == storedUnit.toLowerCase()) {
             let addedQuantity =
               Number(storedQuantity) + Number(currentQuantity);
@@ -170,11 +174,13 @@ export function shoppingListPage() {
           }
         }
       }
+
       for (let i = 0; i < listedRecipes.length; i++) {
         const li = document.createElement("li");
         li.innerText = listedRecipes[i].name;
         itemName?.appendChild(li);
       }
+
       for (let i = 0; i < Object.keys(finalIngredients).length; i++) {
         const li = document.createElement("li");
         li.innerText = (Object.keys(finalIngredients)
